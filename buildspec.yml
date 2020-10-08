@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  pre_build:
+    commands:
+      - echo Nothing to do.
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn package
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 509307361423.dkr.ecr.us-east-1.amazonaws.com
+      - docker build -t eureka-service:latest .
+      - docker tag eureka-service:latest 380324321124.dkr.ecr.us-east-1.amazonaws.com/eureka-server:$CODEBUILD_BUILD_NUMBER
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker push 380324321124.dkr.ecr.us-east-1.amazonaws.com/eureka-server:$CODEBUILD_BUILD_NUMBER
+      - printf '[{"name":"eureka-service","imageUri":"%s"}]' 380324321124.dkr.ecr.us-east-1.amazonaws.com/eureka-server:$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
