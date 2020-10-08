@@ -11,7 +11,7 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn package
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 509307361423.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 380324321124.dkr.ecr.us-east-1.amazonaws.com
       - docker build -t eureka-service:latest .
       - docker tag eureka-service:latest 380324321124.dkr.ecr.us-east-1.amazonaws.com/eureka-server:$CODEBUILD_BUILD_NUMBER
   post_build:
