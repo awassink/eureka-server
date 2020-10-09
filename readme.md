@@ -1,0 +1,3 @@
+# Running Eureka Server and clients on AWS ECS Fargate
+
+I have created three projects to show how you can run Eureka server <https://github.com/awassink/eureka-server>, a Spring Boot hello world service <https://github.com/awassink/eureka-hello-service> registering itself in Eureka and a Spring Boot backend for frontend proxy service <https://github.com/awassink/eureka-b4f-service> looking up the hello world service in Eureka. 
